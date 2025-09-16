@@ -1,0 +1,57 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Переходник QyoMaku</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card">
+    <header class="header">
+      <img class="avatar" src="avatar.jpg" alt="Аватар (замените файл avatar.jpg)" />
+      <h1 class="name">Писда</h1>
+      <p class="username">@QyoMaku</p>
+      <div class="id">ID: <code>7804199613</code></div>
+    </header>
+
+    <section class="section">
+      <h2>Обо мне</h2>
+      <p>Занимаюсь дизайном 1,5 года, так же кодирую на Java & Python, начал кодирование >
+    </section>
+
+    <section class="section">
+      <h2>Контакты</h2>
+      <div class="buttons">
+        <a class="btn" href="https://t.me/ваш_telegram" target="_blank" rel="noopener">Qy>
+        <a class="btn" href="https://wa.me/ВАШ_НОМЕР" target="_blank" rel="noopener">+791>
+        <a class="btn" href="mailto:ваш@почта.ру">QyoMaku@gmail.com</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Оплата / донат</h2>
+      <ul class="payments">
+        <li>TBank: <code>2200 7010 9757 0466</code></li>
+        <li>SberBank: <code>2202 2069 0575 3427</code></li>
+        <li>Crypto: http://t.me/send?start=IVQMJe5ndzn9</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>График активности</h2>
+      <p>Active: Обычно 3-5 часов по будним  вечерам, и 7-8 часов по выходным. По праздни>
+    </section>
+
+    <footer class="footer">
+      <small>© <span id="year"></span>Писда</small>
+    </footer>
+  </main>
+
+  <script>
+    // автоподстановка года
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
