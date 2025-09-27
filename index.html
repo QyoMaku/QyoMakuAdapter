@@ -1,57 +1,140 @@
-<!-- index.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Переходник QyoMaku</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QyoMaku</title>
+  <style>
+    /* Сброс отступов */
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Фон-видео */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(0.6);
+      z-index: -1;
+    }
+
+    /* Центральный контейнер */
+    .main {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Аватарка */
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, purple);
+      background-size: 400% 400%;
+      animation: gradient 6s ease infinite;
+      padding: 4px;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Ник */
+    h1 {
+      margin-top: 15px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    }
+
+    /* ID с кнопкой */
+    .id-box {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    .copy-btn {
+      background: none;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      padding: 4px 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Анимация градиента */
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+  </style>
 </head>
 <body>
-  <main class="card">
-    <header class="header">
-      <img class="avatar" src="avatar.jpg" alt="Аватар (замените файл avatar.jpg)" />
-      <h1 class="name">Писда</h1>
-      <p class="username">@QyoMaku</p>
-      <div class="id">ID: <code>7804199613</code></div>
-    </header>
 
-    <section class="section">
-      <h2>Обо мне</h2>
-      <p>Занимаюсь дизайном 1,5 года, так же кодирую на Java & Python, начал кодирование >
-    </section>
+  <!-- Фон-видео -->
+  <video autoplay muted loop id="bg-video">
+    <source src="VID_20250927_202755_993.mp4" type="video/mp4">
+  </video>
 
-    <section class="section">
-      <h2>Контакты</h2>
-      <div class="buttons">
-        <a class="btn" href="https://t.me/ваш_telegram" target="_blank" rel="noopener">Qy>
-        <a class="btn" href="https://wa.me/ВАШ_НОМЕР" target="_blank" rel="noopener">+791>
-        <a class="btn" href="mailto:ваш@почта.ру">QyoMaku@gmail.com</a>
-      </div>
-    </section>
+  <!-- Музыка -->
+  <audio id="bg-music" src="One Piece OST - Nami's Theme - Extended.mp3"></audio>
 
-    <section class="section">
-      <h2>Оплата / донат</h2>
-      <ul class="payments">
-        <li>TBank: <code>2200 7010 9757 0466</code></li>
-        <li>SberBank: <code>2202 2069 0575 3427</code></li>
-        <li>Crypto: http://t.me/send?start=IVQMJe5ndzn9</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <h2>График активности</h2>
-      <p>Active: Обычно 3-5 часов по будним  вечерам, и 7-8 часов по выходным. По праздни>
-    </section>
-
-    <footer class="footer">
-      <small>© <span id="year"></span>Писда</small>
-    </footer>
-  </main>
+  <!-- Главный блок -->
+  <div class="main" onclick="playMusic()">
+    <div class="avatar">
+      <img src="1000004322.jpg" alt="QyoMaku Avatar">
+    </div>
+    <h1>QyoMaku</h1>
+    <div class="id-box">
+      <span id="user-id">ID: 7804199613</span>
+      <button class="copy-btn" onclick="copyID(event)">Скопировать</button>
+    </div>
+  </div>
 
   <script>
-    // автоподстановка года
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Запуск музыки только после клика
+    function playMusic() {
+      const music = document.getElementById("bg-music");
+      if (music.paused) {
+        music.play();
+      }
+    }
+
+    // Копирование ID
+    function copyID(event) {
+      event.stopPropagation(); // чтобы не запускалась музыка лишний раз
+      const idText = document.getElementById("user-id").innerText.replace("ID: ", "");
+      navigator.clipboard.writeText(idText).then(() => {
+        const btn = event.target;
+        btn.textContent = "✔";
+        setTimeout(() => btn.textContent = "Скопировать", 1500);
+      });
+    }
   </script>
+
 </body>
 </html>
+
