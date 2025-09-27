@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QyoMaku</title>
   <style>
-    /* Сброс отступов */
     * {margin: 0; padding: 0; box-sizing: border-box;}
-
     body {
       font-family: Arial, sans-serif;
       color: #fff;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     /* Фон-видео */
@@ -24,20 +22,20 @@
       z-index: -1;
     }
 
-    /* Центральный контейнер */
+    /* Главный блок */
     .main {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      padding-bottom: 80px;
     }
 
     /* Аватарка */
     .avatar {
-      width: 150px;
-      height: 150px;
+      width: 150px; height: 150px;
       border-radius: 50%;
       border: 3px solid transparent;
       background: linear-gradient(45deg, red, orange, yellow, green, blue, purple);
@@ -45,10 +43,8 @@
       animation: gradient 6s ease infinite;
       padding: 4px;
     }
-
     .avatar img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       border-radius: 50%;
       display: block;
     }
@@ -61,7 +57,7 @@
       text-shadow: 0 0 10px rgba(255,255,255,0.7);
     }
 
-    /* ID с кнопкой */
+    /* ID + копировать */
     .id-box {
       margin-top: 10px;
       display: flex;
@@ -69,7 +65,6 @@
       align-items: center;
       font-size: 1rem;
     }
-
     .copy-btn {
       background: none;
       border: 1px solid #fff;
@@ -79,12 +74,83 @@
       cursor: pointer;
       transition: 0.3s;
     }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
 
-    .copy-btn:hover {
-      background: rgba(255,255,255,0.2);
+    /* Кнопки вкладок */
+    .tabs {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 90%;
+      max-width: 400px;
+    }
+    .tab {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid transparent;
+      border-radius: 25px;
+      padding: 12px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.3s;
+      background-image: linear-gradient(#000, #000), 
+                        linear-gradient(45deg, red, orange, yellow, green, blue, purple);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+    }
+    .tab:hover { transform: scale(1.03); }
+
+    /* Содержимое вкладки */
+    .tab-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      margin-top: 5px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 15px;
+      padding: 0 15px;
+      text-align: left;
+    }
+    .tab-content.open {
+      max-height: 500px;
+      opacity: 1;
+      padding: 15px;
     }
 
-    /* Анимация градиента */
+    /* Кнопки-ссылки */
+    .link-btn {
+      display: inline-block;
+      margin: 8px 5px 0 0;
+      padding: 8px 15px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #fff;
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .link-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* Кнопка музыки */
+    #music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: 0.3s;
+    }
+    #music-btn:hover { background: rgba(255,255,255,0.4); }
+
     @keyframes gradient {
       0% {background-position: 0% 50%;}
       50% {background-position: 100% 50%;}
@@ -100,7 +166,7 @@
   </video>
 
   <!-- Музыка -->
-  <audio id="bg-music" src="HOYO-MiX - Ballad of Many Waters"></audio>
+  <audio id="bg-music" src="HOYO-MiX - Ballad of Many Waters.mp3" loop></audio>
 
   <!-- Главный блок -->
   <div class="main" onclick="playMusic()">
@@ -112,20 +178,87 @@
       <span id="user-id">ID: 7804199613</span>
       <button class="copy-btn" onclick="copyID(event)">Скопировать</button>
     </div>
+
+    <!-- Вкладки -->
+    <div class="tabs">
+      <div class="tab" onclick="toggleTab('time')">🕒 Время работы</div>
+      <div id="time" class="tab-content">
+        <p>• По будням — с 18:45 активен по 4–5 часов.<br>
+           • По выходным — с 8:00 до 12:00, с 18:45 до 00:00.<br>
+           • Иногда бывают исключения.<br>
+           • Если я в сети — это не значит, что я активен.</p>
+      </div>
+
+      <div class="tab" onclick="toggleTab('payment')">💳 Оплата</div>
+      <div id="payment" class="tab-content">
+        <p>Т-Банк — <span id="tbank">2200701097570466</span> 
+           <button class="copy-btn" onclick="copyText('tbank', event)">Скопировать</button></p>
+        <p>СберБанк — <span id="sber">2202206905753427</span> 
+           <button class="copy-btn" onclick="copyText('sber', event)">Скопировать</button></p>
+        <a href="http://t.me/send?start=IVQMJe5ndzn9" class="link-btn">💲 CryptoBot</a>
+      </div>
+
+      <div id="tab3" class="tab-content">
+  <h2>Связь</h2>
+
+  <div class="contact-buttons">
+    <!-- WhatsApp -->
+    <button class="whatsapp" onclick="window.open('https://wa.me/79174873505','_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.11.547 4.097 1.5 5.819L0 24l6.364-1.636A11.947 11.947 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.928 0-3.748-.502-5.333-1.455l-.381-.226-3.774.97 1.004-3.68-.249-.389A9.794 9.794 0 0 1 2.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818S17.42 21.818 12 21.818zM17.01 14.58c-.293-.146-1.732-.854-2-.95-.268-.098-.463-.146-.659.146-.195.293-.756.951-.927 1.146-.171.195-.341.22-.634.073-.293-.146-1.239-.456-2.362-1.454-.873-.779-1.462-1.74-1.633-2.033-.171-.293-.018-.451.128-.598.132-.132.293-.342.439-.512.146-.171.195-.293.293-.488.098-.195.049-.366-.024-.512-.073-.146-.659-1.586-.902-2.171-.237-.57-.478-.49-.659-.5l-.561-.01c-.195 0-.512.073-.781.366-.268.293-1.024 1-1.024 2.439s1.049 2.828 1.195 3.024c.146.195 2.063 3.15 5.004 4.414.7.302 1.245.482 1.67.618.7.223 1.338.192 1.841.116.561-.083 1.732-.707 1.977-1.39.244-.683.244-1.268.171-1.39-.073-.122-.268-.195-.561-.341z"/>
+      </svg>
+      <span>WhatsApp</span>
+    </button>
+
+    <!-- Telegram -->
+    <button class="telegram" onclick="window.open('https://t.me/QyoMaku','_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9.999 15.17L9.94 20c.74 0 1.06-.31 1.45-.69l3.48-3.32 7.22 5.22c1.32.73 2.27.35 2.61-1.22L24 3.64c.42-1.68-.61-2.34-1.9-1.93L1.44 9.64C-.57 10.43-.56 11.56 1.07 12.06l5.54 1.73 12.89-8.07-9.5 9.45z"/>
+      </svg>
+      <span>Telegram</span>
+    </button>
+
+    <!-- Email -->
+    <button class="email" onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 13.065L0 6V4.5l12 6.565L24 4.5V6l-12 7.065zm0 2.435l12-7.065V18c0 1.104-.896 2-2 2H2c-1.104 0-2-.896-2-2V8.435l12 7.065z"/>
+      </svg>
+      <span>Email</span>
+    </button>
   </div>
+</div>
+
+
+  <!-- Кнопка музыки -->
+  <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
   <script>
-    // Запуск музыки только после клика
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+
+    // Автовключение после первого клика
     function playMusic() {
-      const music = document.getElementById("bg-music");
+      if (music.paused) {
+        music.play().then(()=> {
+          musicBtn.textContent = "🔊";
+        }).catch(()=>{});
+      }
+    }
+
+    // Вкл/выкл музыки вручную
+    function toggleMusic() {
       if (music.paused) {
         music.play();
+        musicBtn.textContent = "🔊";
+      } else {
+        music.pause();
+        musicBtn.textContent = "🔇";
       }
     }
 
     // Копирование ID
     function copyID(event) {
-      event.stopPropagation(); // чтобы не запускалась музыка лишний раз
+      event.stopPropagation();
       const idText = document.getElementById("user-id").innerText.replace("ID: ", "");
       navigator.clipboard.writeText(idText).then(() => {
         const btn = event.target;
@@ -133,9 +266,25 @@
         setTimeout(() => btn.textContent = "Скопировать", 1500);
       });
     }
+
+    // Копирование текста (карты)
+    function copyText(id, event) {
+      event.stopPropagation();
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        btn.textContent = "✔";
+        setTimeout(() => btn.textContent = "Скопировать", 1500);
+      });
+    }
+
+    // Открытие/закрытие вкладки
+    function toggleTab(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("open");
+    }
   </script>
 
 </body>
 </html>
-
 
