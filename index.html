@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>QyoMaku</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Иконки FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* ===== Общий стиль ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
@@ -28,28 +24,25 @@
 
     /* ===== Главная карточка ===== */
     .main-card {
-      margin-top: 40px;
+      margin-top: 50px;
       padding: 20px;
       display: inline-block;
       background: rgba(0,0,0,0.4);
       border-radius: 20px;
       animation: fadeIn 2s;
-      max-width: 500px;
-      width: 90%;
     }
 
     /* ===== Аватарка ===== */
     .avatar {
       width: 150px; height: 150px;
       border-radius: 50%;
-      border: 5px solid transparent;
+      border: 2px solid transparent; /* тоньше */
       background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
       background-size: 400% 400%;
       animation: rainbow 8s linear infinite;
-      padding: 5px;
+      padding: 2px; /* тоже меньше */
     }
 
-    /* ===== Ник + ID ===== */
     h1 { margin-top: 15px; font-size: 28px; font-weight: bold; }
     #user-id { margin-top: 5px; font-size: 14px; }
     #user-id button {
@@ -73,7 +66,6 @@
       font-size: 16px;
       cursor: pointer;
       color: white;
-      background-clip: padding-box;
       position: relative;
     }
     .tab-btn::before {
@@ -106,9 +98,7 @@
       border-radius: 15px;
       padding: 15px;
       margin: 10px 0;
-      text-align: left;
     }
-    .card p { margin-bottom: 8px; }
     .card button {
       margin-top: 5px;
       padding: 5px 10px;
@@ -127,20 +117,21 @@
       margin-top: 15px;
       flex-wrap: wrap;
     }
-    .contact-buttons a {
+    .contact-buttons button {
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 12px 20px;
+      border: none;
       border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
       background: rgba(0,0,0,0.5);
       color: white;
-      text-decoration: none;
       border: 2px solid transparent;
       position: relative;
-      transition: background .3s;
     }
-    .contact-buttons a::before {
+    .contact-buttons button::before {
       content: "";
       position: absolute;
       top: -2px; left: -2px; right: -2px; bottom: -2px;
@@ -150,11 +141,39 @@
       animation: rainbow 8s linear infinite;
       z-index: -1;
     }
-    .contact-buttons a:hover {
+    .contact-buttons button:hover {
       background: rgba(255,255,255,0.2);
     }
-    .contact-buttons i {
-      font-size: 18px;
+
+    /* ===== Панель музыки ===== */
+    #music-panel {
+      display: none;
+      position: fixed;
+      bottom: 70px; right: 20px;
+      background: rgba(0,0,0,0.8);
+      padding: 15px;
+      border-radius: 15px;
+      width: 250px;
+      text-align: left;
+      z-index: 20;
+    }
+    #music-panel h3 { margin-bottom: 10px; }
+    #music-panel ul { list-style: none; }
+    #music-panel li {
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #music-panel button, #music-panel a {
+      margin-left: 5px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 6px;
+      padding: 4px 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
     }
 
     /* ===== Кнопка музыки ===== */
@@ -169,7 +188,7 @@
       background: rgba(0,0,0,0.6);
       color: white;
       border: 2px solid transparent;
-      z-index: 10;
+      z-index: 30;
     }
     #music-btn::before {
       content: "";
@@ -195,14 +214,6 @@
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* ===== Адаптивность ===== */
-    @media (max-width: 600px) {
-      .avatar { width: 120px; height: 120px; }
-      h1 { font-size: 22px; }
-      .tab-btn { font-size: 14px; padding: 10px 18px; }
-      .contact-buttons a { font-size: 14px; padding: 10px 16px; }
-    }
   </style>
 </head>
 <body>
@@ -221,6 +232,7 @@
     <button class="tab-btn" onclick="toggleTab('tab1')">🕒 Время работы</button>
     <button class="tab-btn" onclick="toggleTab('tab2')">💳 Оплата</button>
     <button class="tab-btn" onclick="toggleTab('tab3')">📞 Связь</button>
+    <button class="tab-btn" onclick="toggleTab('tab4')">🎨 Портфолио</button>
   </div>
 
   <!-- ===== Вкладки ===== -->
@@ -235,17 +247,17 @@
   <div id="tab2" class="tab-content">
     <h2>Оплата</h2>
     <div class="card">
-      <p><i class="fa-solid fa-building-columns"></i> <b>Т-Банк</b></p>
+      <p><b>💳 Т-Банк</b></p>
       <p id="tbank">2200701097570466</p>
       <button onclick="copyText('tbank', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><i class="fa-solid fa-building-columns"></i> <b>СберБанк</b></p>
+      <p><b>🏦 СберБанк</b></p>
       <p id="sber">2202206905753427</p>
       <button onclick="copyText('sber', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><i class="fa-brands fa-bitcoin"></i> <b>CryptoBot</b></p>
+      <p><b>₿ CryptoBot</b></p>
       <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
     </div>
   </div>
@@ -253,17 +265,39 @@
   <div id="tab3" class="tab-content">
     <h2>Связь</h2>
     <div class="contact-buttons">
-      <a href="https://wa.me/79174873505" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-      <a href="https://t.me/QyoMaku" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
-      <a href="mailto:QyoMaku@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email</a>
+      <button onclick="window.open('https://wa.me/79174873505','_blank')">💬 WhatsApp</button>
+      <button onclick="window.open('https://t.me/QyoMaku','_blank')">✈️ Telegram</button>
+      <button onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">📧 Email</button>
     </div>
   </div>
 
-  <!-- ===== Музыка ===== -->
-  <audio id="bg-music" loop>
-    <source src="HOYO-MiX - Ballad of Many Waters.mp3" type="audio/mpeg">
-  </audio>
-  <button id="music-btn" onclick="toggleMusic()">🎵</button>
+  <div id="tab4" class="tab-content">
+    <h2>Портфолио</h2>
+    <p>Мой канал по дизайну: 
+      <a href="https://t.me/PortMaku" target="_blank">@PortMaku</a>
+    </p>
+  </div>
+
+  <!-- ===== Панель музыки ===== -->
+  <div id="music-panel">
+    <h3>🎶 Музыка</h3>
+    <ul>
+      <li>
+        HOYO-MiX - Ballad of Many Waters
+        <button onclick="playMusic('HOYO-MiX - Ballad of Many Waters.mp3')">▶️</button>
+        <a href="One Piece OST - Nami's Theme - Extended.mp3" download>⬇️</a>
+      </li>
+      <li>
+        Lo-fi Relax Beat
+        <button onclick="playMusic('music/lofi.mp3')">▶️</button>
+        <a href="music/lofi.mp3" download>⬇️</a>
+      </li>
+    </ul>
+    <button onclick="stopMusic()">🔇 Выключить</button>
+  </div>
+
+  <!-- ===== Кнопка музыки ===== -->
+  <button id="music-btn" onclick="toggleMusicPanel()">🎵</button>
 
   <!-- ===== JS ===== -->
   <script>
@@ -285,20 +319,22 @@
       });
     }
 
-    const music = document.getElementById("bg-music");
-    const musicBtn = document.getElementById("music-btn");
-    let musicPlaying = false;
-
-    function toggleMusic() {
-      if (musicPlaying) {
-        music.pause();
-        musicPlaying = false;
-        musicBtn.innerText = "🎵";
-      } else {
-        music.play();
-        musicPlaying = true;
-        musicBtn.innerText = "🔇";
+    let currentAudio = null;
+    function playMusic(src) {
+      if (currentAudio) currentAudio.pause();
+      currentAudio = new Audio(src);
+      currentAudio.play();
+    }
+    function stopMusic() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
       }
+    }
+
+    function toggleMusicPanel() {
+      const panel = document.getElementById("music-panel");
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
     }
   </script>
 </body>
