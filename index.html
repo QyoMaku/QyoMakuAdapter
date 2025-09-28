@@ -40,7 +40,7 @@
       background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
       background-size: 400% 400%;
       animation: rainbow 8s linear infinite;
-      padding: 2px; /* тоже меньше */
+      padding: 2px;
     }
 
     h1 { margin-top: 15px; font-size: 28px; font-weight: bold; }
@@ -199,6 +199,25 @@
       background-size: 400% 400%;
       animation: rainbow 8s linear infinite;
       z-index: -1;
+    }
+
+    /* ===== Адаптив ===== */
+    @media (max-width: 768px) {
+      h1 { font-size: 22px; }
+      .tab-btn {
+        display: block;
+        width: 90%;
+        margin: 10px auto;
+        font-size: 14px;
+        padding: 14px;
+      }
+      .tab-content { width: 95%; }
+      .contact-buttons { flex-direction: column; align-items: stretch; }
+      .contact-buttons button {
+        width: 100%;
+        justify-content: center;
+      }
+      #music-panel { width: 90%; right: 5%; }
     }
 
     /* ===== Анимации ===== */
