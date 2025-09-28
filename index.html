@@ -1,251 +1,305 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QyoMaku</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-  :root {
-    --rainbow-gradient: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
-    --main-bg: rgba(0,0,0,0.6);
-    --btn-bg: rgba(0,0,0,0.5);
-    --btn-hover-bg: rgba(255,255,255,0.2);
-    --card-bg: rgba(255,255,255,0.1);
-    --transition-speed: 0.3s;
-  }
+  <meta charset="UTF-8">
+  <title>QyoMaku</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Иконки FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ===== Общий стиль ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: Arial, sans-serif;
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
-  }
+    /* ===== Видео фон ===== */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: grayscale(100%) brightness(0.7);
+    }
 
-  /* ===== Видео фон ===== */
-  #bg-video {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    filter: grayscale(100%) brightness(0.7);
-  }
+    /* ===== Главная карточка ===== */
+    .main-card {
+      margin-top: 40px;
+      padding: 20px;
+      display: inline-block;
+      background: rgba(0,0,0,0.4);
+      border-radius: 20px;
+      animation: fadeIn 2s;
+      max-width: 500px;
+      width: 90%;
+    }
 
-  /* ===== Главная карточка ===== */
-  .main-card {
-    margin-top: 40px;
-    padding: 20px;
-    display: inline-block;
-    background: rgba(0,0,0,0.4);
-    border-radius: 20px;
-    animation: fadeIn 1.5s ease-in;
-    max-width: 500px;
-    width: 90%;
-  }
+    /* ===== Аватарка ===== */
+    .avatar {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      border: 5px solid transparent;
+      background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: rainbow 8s linear infinite;
+      padding: 5px;
+    }
 
-  .avatar {
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    border: 5px solid transparent;
-    background: var(--rainbow-gradient);
-    background-size: 400% 400%;
-    animation: rainbow 8s linear infinite;
-    padding: 5px;
-  }
+    /* ===== Ник + ID ===== */
+    h1 { margin-top: 15px; font-size: 28px; font-weight: bold; }
+    #user-id { margin-top: 5px; font-size: 14px; }
+    #user-id button {
+      margin-left: 8px;
+      padding: 3px 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
 
-  h1 { margin-top: 15px; font-size: 28px; font-weight: bold; }
-  #user-id { margin-top: 5px; font-size: 14px; }
-  #user-id button {
-    margin-left: 8px; padding: 3px 8px;
-    border: none; border-radius: 8px;
-    cursor: pointer; font-size: 12px;
-    background: rgba(255,255,255,0.2);
-    color: white;
-  }
+    /* ===== Кнопки вкладок ===== */
+    .tab-btn {
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 25px;
+      background: rgba(0,0,0,0.5);
+      border: 2px solid transparent;
+      font-size: 16px;
+      cursor: pointer;
+      color: white;
+      background-clip: padding-box;
+      position: relative;
+    }
+    .tab-btn::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: 25px;
+      background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: rainbow 8s linear infinite;
+      z-index: -1;
+    }
+    .tab-btn:hover { background: rgba(255,255,255,0.2); }
 
-  .tab-btn {
-    margin: 10px;
-    padding: 12px 24px;
-    border-radius: 25px;
-    background: var(--btn-bg);
-    border: 2px solid transparent;
-    font-size: 16px;
-    cursor: pointer;
-    color: white;
-    position: relative;
-    overflow: hidden;
-  }
-  .tab-btn::before {
-    content: "";
-    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-    border-radius: 25px;
-    background: var(--rainbow-gradient);
-    background-size: 400% 400%;
-    animation: rainbow 8s linear infinite;
-    z-index: -1;
-  }
-  .tab-btn:hover { background: var(--btn-hover-bg); }
+    /* ===== Вкладки ===== */
+    .tab-content {
+      display: none;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      animation: drop 0.6s ease;
+    }
 
-  .tab-content {
-    display: none;
-    margin: 20px auto;
-    padding: 20px;
-    width: 90%; max-width: 500px;
-    background: var(--main-bg);
-    border-radius: 20px;
-    animation: drop 0.6s ease;
-  }
+    /* ===== Карточки оплаты ===== */
+    .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 15px;
+      margin: 10px 0;
+      text-align: left;
+    }
+    .card p { margin-bottom: 8px; }
+    .card button {
+      margin-top: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
 
-  .card {
-    background: var(--card-bg);
-    border-radius: 15px;
-    padding: 15px;
-    margin: 10px 0;
-    text-align: left;
-  }
-  .card p { margin-bottom: 8px; }
-  .card button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.2);
-    color: white;
-  }
+    /* ===== Кнопки связи ===== */
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .contact-buttons a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 25px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      text-decoration: none;
+      border: 2px solid transparent;
+      position: relative;
+      transition: background .3s;
+    }
+    .contact-buttons a::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: 25px;
+      background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: rainbow 8s linear infinite;
+      z-index: -1;
+    }
+    .contact-buttons a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .contact-buttons i {
+      font-size: 18px;
+    }
 
-  .contact-buttons {
-    display: flex; justify-content: center; gap: 15px;
-    margin-top: 15px; flex-wrap: wrap;
-  }
-  .contact-buttons a {
-    display: flex; align-items: center; gap: 8px;
-    padding: 12px 20px; border-radius: 25px;
-    background: var(--btn-bg); color: white;
-    text-decoration: none; border: 2px solid transparent;
-    position: relative; transition: background var(--transition-speed);
-  }
-  .contact-buttons a::before {
-    content: "";
-    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-    border-radius: 25px;
-    background: var(--rainbow-gradient);
-    background-size: 400% 400%;
-    animation: rainbow 8s linear infinite;
-    z-index: -1;
-  }
-  .contact-buttons a:hover { background: var(--btn-hover-bg); }
+    /* ===== Кнопка музыки ===== */
+    #music-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      padding: 12px 16px;
+      border-radius: 50%;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: 2px solid transparent;
+      z-index: 10;
+    }
+    #music-btn::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: 50%;
+      background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
+      background-size: 400% 400%;
+      animation: rainbow 8s linear infinite;
+      z-index: -1;
+    }
 
-  #music-btn {
-    position: fixed; bottom: 20px; right: 20px;
-    padding: 12px 16px; border-radius: 50%; border: none;
-    font-size: 18px; cursor: pointer;
-    background: rgba(0,0,0,0.6); color: white;
-    border: 2px solid transparent; z-index: 10;
-    position: relative;
-  }
-  #music-btn::before {
-    content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
-    border-radius: 50%; background: var(--rainbow-gradient);
-    background-size: 400% 400%; animation: rainbow 8s linear infinite;
-    z-index: -1;
-  }
+    /* ===== Анимации ===== */
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes drop {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  @keyframes rainbow { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes drop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-
-  @media (max-width: 600px) {
-    .avatar { width: 120px; height: 120px; }
-    h1 { font-size: 22px; }
-    .tab-btn { font-size: 14px; padding: 10px 18px; }
-    .contact-buttons a { font-size: 14px; padding: 10px 16px; }
-  }
-</style>
+    /* ===== Адаптивность ===== */
+    @media (max-width: 600px) {
+      .avatar { width: 120px; height: 120px; }
+      h1 { font-size: 22px; }
+      .tab-btn { font-size: 14px; padding: 10px 18px; }
+      .contact-buttons a { font-size: 14px; padding: 10px 16px; }
+    }
+  </style>
 </head>
 <body>
+  <!-- ===== Фон-видео ===== -->
+  <video autoplay muted loop id="bg-video">
+    <source src="VID_20250927_202755_993.mp4" type="video/mp4">
+  </video>
 
-<video autoplay muted loop id="bg-video">
-  <source src="VID_20250927_202755_993.mp4" type="video/mp4">
-</video>
-
-<div class="main-card">
-  <img src="1000004322.jpg" alt="Avatar" class="avatar">
-  <h1>QyoMaku</h1>
-  <p id="user-id">ID: 7804199613 <button data-copy-target="user-id">Скопировать</button></p>
-  <button class="tab-btn" data-tab-target="tab1">🕒 Время работы</button>
-  <button class="tab-btn" data-tab-target="tab2">💳 Оплата</button>
-  <button class="tab-btn" data-tab-target="tab3">📞 Связь</button>
-</div>
-
-<div id="tab1" class="tab-content">
-  <h2>Время работы</h2>
-  <p>• По будням - с 18:45 активен по 4-5 часов.<br>• По выходным - с 8:00 до 12:00, с 18:45 до 00:00.<br>• Иногда бывают исключения.<br>• Если я в сети это не значит что я активен.</p>
-</div>
-
-<div id="tab2" class="tab-content">
-  <h2>Оплата</h2>
-  <div class="card">
-    <p><i class="fa-solid fa-building-columns"></i> <b>Т-Банк</b></p>
-    <p class="copy-target">2200701097570466</p>
-    <button data-copy-target="2200701097570466">Скопировать</button>
+  <!-- ===== Главная ===== -->
+  <div class="main-card">
+    <img src="1000004322.jpg" alt="Avatar" class="avatar">
+    <h1>QyoMaku</h1>
+    <p id="user-id">ID: 7804199613 
+      <button onclick="copyText('user-id', event)">Скопировать</button>
+    </p>
+    <button class="tab-btn" onclick="toggleTab('tab1')">🕒 Время работы</button>
+    <button class="tab-btn" onclick="toggleTab('tab2')">💳 Оплата</button>
+    <button class="tab-btn" onclick="toggleTab('tab3')">📞 Связь</button>
   </div>
-  <div class="card">
-    <p><i class="fa-solid fa-building-columns"></i> <b>СберБанк</b></p>
-    <p class="copy-target">2202206905753427</p>
-    <button data-copy-target="2202206905753427">Скопировать</button>
+
+  <!-- ===== Вкладки ===== -->
+  <div id="tab1" class="tab-content">
+    <h2>Время работы</h2>
+    <p>• По будням - с 18:45 активен по 4-5 часов.<br>
+       • По выходным - с 8:00 до 12:00, с 18:45 до 00:00.<br>
+       • Иногда бывают исключения.<br>
+       • Если я в сети это не значит что я активен.</p>
   </div>
-  <div class="card">
-    <p><i class="fa-brands fa-bitcoin"></i> <b>CryptoBot</b></p>
-    <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
+
+  <div id="tab2" class="tab-content">
+    <h2>Оплата</h2>
+    <div class="card">
+      <p><i class="fa-solid fa-building-columns"></i> <b>Т-Банк</b></p>
+      <p id="tbank">2200701097570466</p>
+      <button onclick="copyText('tbank', event)">Скопировать</button>
+    </div>
+    <div class="card">
+      <p><i class="fa-solid fa-building-columns"></i> <b>СберБанк</b></p>
+      <p id="sber">2202206905753427</p>
+      <button onclick="copyText('sber', event)">Скопировать</button>
+    </div>
+    <div class="card">
+      <p><i class="fa-brands fa-bitcoin"></i> <b>CryptoBot</b></p>
+      <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
+    </div>
   </div>
-</div>
 
-<div id="tab3" class="tab-content">
-  <h2>Связь</h2>
-  <div class="contact-buttons">
-    <a href="https://wa.me/79174873505" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-    <a href="https://t.me/QyoMaku" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
-    <a href="mailto:QyoMaku@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email</a>
+  <div id="tab3" class="tab-content">
+    <h2>Связь</h2>
+    <div class="contact-buttons">
+      <a href="https://wa.me/79174873505" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://t.me/QyoMaku" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+      <a href="mailto:QyoMaku@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email</a>
+    </div>
   </div>
-</div>
 
-<audio id="bg-music" loop>
-  <source src="HOYO-MiX - Ballad of Many Waters.mp3" type="audio/mpeg">
-</audio>
-<button id="music-btn">🎵</button>
+  <!-- ===== Музыка ===== -->
+  <audio id="bg-music" loop>
+    <source src="HOYO-MiX - Ballad of Many Waters.mp3" type="audio/mpeg">
+  </audio>
+  <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
-<script>
-const tabs = document.querySelectorAll('.tab-btn');
-tabs.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = document.getElementById(btn.dataset.tabTarget);
-    target.style.display = target.style.display === 'block' ? 'none' : 'block';
-  });
-});
+  <!-- ===== JS ===== -->
+  <script>
+    function toggleTab(id) {
+      const tab = document.getElementById(id);
+      tab.style.display = (tab.style.display === "block") ? "none" : "block";
+    }
 
-const copyButtons = document.querySelectorAll('button[data-copy-target]');
-copyButtons.forEach(btn => {
-  btn.addEventListener('click', e => {
-    const targetId = btn.dataset.copyTarget;
-    const text = document.getElementById(targetId)?.innerText || targetId;
-    navigator.clipboard.writeText(text).then(() => {
-      const original = btn.innerText;
-      btn.innerText = '✔️';
-      setTimeout(() => btn.innerText = original, 1500);
-    });
-  });
-});
+    function copyText(id, e) {
+      let text;
+      if (id === "user-id") {
+        text = "7804199613";
+      } else {
+        text = document.getElementById(id).innerText;
+      }
+      navigator.clipboard.writeText(text).then(() => {
+        e.target.innerText = "✔️";
+        setTimeout(() => e.target.innerText = "Скопировать", 1500);
+      });
+    }
 
-const music = document.getElementById('bg-music');
-let musicPlaying = false;
-const musicBtn = document.getElementById('music-btn');
-musicBtn.addEventListener('click', () => {
-  musicPlaying ? music.pause() : music.play();
-  musicPlaying = !musicPlaying;
-  musicBtn.innerText = musicPlaying ? '🔇' : '🎵';
-});
-</script>
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+    let musicPlaying = false;
+
+    function toggleMusic() {
+      if (musicPlaying) {
+        music.pause();
+        musicPlaying = false;
+        musicBtn.innerText = "🎵";
+      } else {
+        music.play();
+        musicPlaying = true;
+        musicBtn.innerText = "🔇";
+      }
+    }
+  </script>
 </body>
 </html>
