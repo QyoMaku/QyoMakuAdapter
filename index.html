@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- фикс адаптива -->
   <title>QyoMaku</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +37,7 @@
     .avatar {
       width: 150px; height: 150px;
       border-radius: 50%;
-      border: 2px solid transparent; /* тоньше */
+      border: 2px solid transparent;
       background: linear-gradient(270deg, red, orange, yellow, lime, cyan, blue, violet, red);
       background-size: 400% 400%;
       animation: rainbow 8s linear infinite;
@@ -98,9 +99,15 @@
       border-radius: 15px;
       padding: 15px;
       margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card img {
+      width: 28px; height: 28px;
     }
     .card button {
-      margin-top: 5px;
+      margin-left: auto;
       padding: 5px 10px;
       border: none;
       border-radius: 10px;
@@ -117,21 +124,19 @@
       margin-top: 15px;
       flex-wrap: wrap;
     }
-    .contact-buttons button {
+    .contact-buttons a {
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 12px 20px;
-      border: none;
       border-radius: 25px;
-      cursor: pointer;
+      text-decoration: none;
       font-size: 16px;
       background: rgba(0,0,0,0.5);
       color: white;
-      border: 2px solid transparent;
       position: relative;
     }
-    .contact-buttons button::before {
+    .contact-buttons a::before {
       content: "";
       position: absolute;
       top: -2px; left: -2px; right: -2px; bottom: -2px;
@@ -141,8 +146,8 @@
       animation: rainbow 8s linear infinite;
       z-index: -1;
     }
-    .contact-buttons button:hover {
-      background: rgba(255,255,255,0.2);
+    .contact-buttons img {
+      width: 22px; height: 22px;
     }
 
     /* ===== Панель музыки ===== */
@@ -213,7 +218,7 @@
       }
       .tab-content { width: 95%; }
       .contact-buttons { flex-direction: column; align-items: stretch; }
-      .contact-buttons button {
+      .contact-buttons a {
         width: 100%;
         justify-content: center;
       }
@@ -266,17 +271,26 @@
   <div id="tab2" class="tab-content">
     <h2>Оплата</h2>
     <div class="card">
-      <p><b>💳 Т-Банк</b></p>
-      <p id="tbank">2200701097570466</p>
+      <img src="https://img.icons8.com/color/48/000000/bank-card-back-side.png" alt="Т-Банк">
+      <div>
+        <b>Т-Банк</b>
+        <p id="tbank">2200701097570466</p>
+      </div>
       <button onclick="copyText('tbank', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>🏦 СберБанк</b></p>
-      <p id="sber">2202206905753427</p>
+      <img src="https://img.icons8.com/color/48/000000/sberbank-logo.png" alt="Сбер">
+      <div>
+        <b>СберБанк</b>
+        <p id="sber">2202206905753427</p>
+      </div>
       <button onclick="copyText('sber', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>₿ CryptoBot</b></p>
+      <img src="https://img.icons8.com/color/48/000000/bitcoin--v1.png" alt="Crypto">
+      <div>
+        <b>CryptoBot</b>
+      </div>
       <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
     </div>
   </div>
@@ -284,9 +298,15 @@
   <div id="tab3" class="tab-content">
     <h2>Связь</h2>
     <div class="contact-buttons">
-      <button onclick="window.open('https://wa.me/79174873505','_blank')">💬 WhatsApp</button>
-      <button onclick="window.open('https://t.me/QyoMaku','_blank')">✈️ Telegram</button>
-      <button onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">📧 Email</button>
+      <a href="https://wa.me/79174873505" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp"> WhatsApp
+      </a>
+      <a href="https://t.me/QyoMaku" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/telegram-app.png" alt="Telegram"> Telegram
+      </a>
+      <a href="mailto:QyoMaku@gmail.com">
+        <img src="https://img.icons8.com/color/48/000000/gmail.png" alt="Email"> Email
+      </a>
     </div>
   </div>
 
@@ -304,7 +324,7 @@
       <li>
         HOYO-MiX - Ballad of Many Waters
         <button onclick="playMusic('HOYO-MiX - Ballad of Many Waters.mp3')">▶️</button>
-        <a href="One Piece OST - Nami's Theme - Extended.mp3" download>⬇️</a>
+        <a href="HOYO-MiX - Ballad of Many Waters.mp3" download>⬇️</a>
       </li>
       <li>
         Lo-fi Relax Beat
