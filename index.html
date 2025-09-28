@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>QyoMaku</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Иконки FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     /* ===== Общий стиль ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,12 +28,14 @@
 
     /* ===== Главная карточка ===== */
     .main-card {
-      margin-top: 50px;
+      margin-top: 40px;
       padding: 20px;
       display: inline-block;
       background: rgba(0,0,0,0.4);
       border-radius: 20px;
       animation: fadeIn 2s;
+      max-width: 500px;
+      width: 90%;
     }
 
     /* ===== Аватарка ===== */
@@ -71,7 +76,6 @@
       background-clip: padding-box;
       position: relative;
     }
-
     .tab-btn::before {
       content: "";
       position: absolute;
@@ -82,7 +86,6 @@
       animation: rainbow 8s linear infinite;
       z-index: -1;
     }
-
     .tab-btn:hover { background: rgba(255,255,255,0.2); }
 
     /* ===== Вкладки ===== */
@@ -103,7 +106,9 @@
       border-radius: 15px;
       padding: 15px;
       margin: 10px 0;
+      text-align: left;
     }
+    .card p { margin-bottom: 8px; }
     .card button {
       margin-top: 5px;
       padding: 5px 10px;
@@ -122,21 +127,20 @@
       margin-top: 15px;
       flex-wrap: wrap;
     }
-    .contact-buttons button {
+    .contact-buttons a {
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 12px 20px;
-      border: none;
       border-radius: 25px;
-      cursor: pointer;
-      font-size: 16px;
       background: rgba(0,0,0,0.5);
       color: white;
+      text-decoration: none;
       border: 2px solid transparent;
       position: relative;
+      transition: background .3s;
     }
-    .contact-buttons button::before {
+    .contact-buttons a::before {
       content: "";
       position: absolute;
       top: -2px; left: -2px; right: -2px; bottom: -2px;
@@ -146,8 +150,11 @@
       animation: rainbow 8s linear infinite;
       z-index: -1;
     }
-    .contact-buttons button:hover {
+    .contact-buttons a:hover {
       background: rgba(255,255,255,0.2);
+    }
+    .contact-buttons i {
+      font-size: 18px;
     }
 
     /* ===== Кнопка музыки ===== */
@@ -188,6 +195,14 @@
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* ===== Адаптивность ===== */
+    @media (max-width: 600px) {
+      .avatar { width: 120px; height: 120px; }
+      h1 { font-size: 22px; }
+      .tab-btn { font-size: 14px; padding: 10px 18px; }
+      .contact-buttons a { font-size: 14px; padding: 10px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -220,27 +235,27 @@
   <div id="tab2" class="tab-content">
     <h2>Оплата</h2>
     <div class="card">
-      <p><b>Т-Банк</b></p>
+      <p><i class="fa-solid fa-building-columns"></i> <b>Т-Банк</b></p>
       <p id="tbank">2200701097570466</p>
       <button onclick="copyText('tbank', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>СберБанк</b></p>
+      <p><i class="fa-solid fa-building-columns"></i> <b>СберБанк</b></p>
       <p id="sber">2202206905753427</p>
       <button onclick="copyText('sber', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>CryptoBot</b></p>
-      <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">$ Открыть</button>
+      <p><i class="fa-brands fa-bitcoin"></i> <b>CryptoBot</b></p>
+      <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
     </div>
   </div>
 
   <div id="tab3" class="tab-content">
     <h2>Связь</h2>
     <div class="contact-buttons">
-      <button onclick="window.open('https://wa.me/79174873505','_blank')">📱 WhatsApp</button>
-      <button onclick="window.open('https://t.me/QyoMaku','_blank')">✈️ Telegram</button>
-      <button onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">📧 Email</button>
+      <a href="https://wa.me/79174873505" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://t.me/QyoMaku" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+      <a href="mailto:QyoMaku@gmail.com" target="_blank"><i class="fa-solid fa-envelope"></i> Email</a>
     </div>
   </div>
 
