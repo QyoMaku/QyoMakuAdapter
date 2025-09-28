@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>QyoMaku</title>
   <style>
-    /* ===== Общий стиль ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
@@ -71,7 +70,6 @@
       background-clip: padding-box;
       position: relative;
     }
-
     .tab-btn::before {
       content: "";
       position: absolute;
@@ -82,7 +80,6 @@
       animation: rainbow 8s linear infinite;
       z-index: -1;
     }
-
     .tab-btn:hover { background: rgba(255,255,255,0.2); }
 
     /* ===== Вкладки ===== */
@@ -103,6 +100,13 @@
       border-radius: 15px;
       padding: 15px;
       margin: 10px 0;
+      text-align: left;
+    }
+    .card p {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
     }
     .card button {
       margin-top: 5px;
@@ -220,27 +224,57 @@
   <div id="tab2" class="tab-content">
     <h2>Оплата</h2>
     <div class="card">
-      <p><b>Т-Банк</b></p>
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="lime" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+        <b>Т-Банк</b>
+      </p>
       <p id="tbank">2200701097570466</p>
       <button onclick="copyText('tbank', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>СберБанк</b></p>
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+        <b>СберБанк</b>
+      </p>
       <p id="sber">2202206905753427</p>
       <button onclick="copyText('sber', event)">Скопировать</button>
     </div>
     <div class="card">
-      <p><b>CryptoBot</b></p>
-      <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">$ Открыть</button>
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="cyan" viewBox="0 0 24 24">
+          <rect x="4" y="4" width="16" height="16"/>
+        </svg>
+        <b>CryptoBot</b>
+      </p>
+      <button onclick="window.open('http://t.me/send?start=IVQMJe5ndzn9','_blank')">Открыть</button>
     </div>
   </div>
 
   <div id="tab3" class="tab-content">
     <h2>Связь</h2>
     <div class="contact-buttons">
-      <button onclick="window.open('https://wa.me/79174873505','_blank')">📱 WhatsApp</button>
-      <button onclick="window.open('https://t.me/QyoMaku','_blank')">✈️ Telegram</button>
-      <button onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">📧 Email</button>
+      <button onclick="window.open('https://wa.me/79174873505','_blank')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="lime" viewBox="0 0 24 24">
+          <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.373 0 0 5.373 0 12a11.94 11.94 0 0 0 3.48 8.52L2 24l3.66-1.44A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12 0-3.2-1.248-6.21-3.48-8.52z"/>
+        </svg>
+        WhatsApp
+      </button>
+      <button onclick="window.open('https://t.me/QyoMaku','_blank')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="cyan" viewBox="0 0 24 24">
+          <path d="M9.999 15.999 9.998 15.998 9.999 16 17.743 21l1.85-11.553L3 9.999l6.999 5.999Z"/>
+        </svg>
+        Telegram
+      </button>
+      <button onclick="window.open('mailto:QyoMaku@gmail.com','_blank')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="magenta" viewBox="0 0 24 24">
+          <path d="M12 13.5 0 6V18h24V6L12 13.5zM12 10.5 24 3H0l12 7.5z"/>
+        </svg>
+        Email
+      </button>
     </div>
   </div>
 
